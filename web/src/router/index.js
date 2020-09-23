@@ -1,14 +1,30 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import Router from "vue-router";
 
-Vue.use(VueRouter);
+const Login = () =>
+  import(/* webpackChunkName: 'login' */ "../views/Login.vue");
+const Reg = () => import(/* webpackChunkName: 'reg' */ "../views/Reg.vue");
+const Forget = () =>
+  import(/* webpackChunkName: 'forget' */ "../views/Forget.vue");
 
-const routes = [];
+Vue.use(Router);
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+export default new Router({
+  routes: [
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/reg",
+      name: "reg",
+      component: Reg,
+    },
+    {
+      path: "/forget",
+      name: "forget",
+      component: Forget,
+    },
+  ],
 });
-
-export default router;

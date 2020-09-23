@@ -1,101 +1,30 @@
 <template>
-  <div class="app">
-    <form class="layui-form layui-form-pane" action>
-      <div class="layui-form-item">
-        <label class="layui-form-label">账号</label>
-        <div class="layui-input-block">
-          <input
-            type="text"
-            name="user"
-            placeholder="请输入您的账号"
-            v-validate="'required|email'"
-            autocomplete="off"
-            class="layui-input"
-          />
-        </div>
-        <div class="error layui-form-mid">{{ errors.first("user") }}</div>
-      </div>
-
-      <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-inline">
-          <input
-            type="password"
-            name="password"
-            placeholder="请输入您的密码"
-            autocomplete="off"
-            class="layui-input"
-          />
-        </div>
-      </div>
-
-      <div class="layui-form-item">
-        <label class="layui-form-label">验证码</label>
-        <div class="layui-input-inline">
-          <input
-            type="text"
-            name="title"
-            placeholder="请输入验证码"
-            autocomplete="off"
-            class="layui-input"
-          />
-        </div>
-        <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha"></div>
-      </div>
-      <div class="layui-form-item">
-        <div class="layui-input-block">
-          <button class="layui-btn" lay-submit lay-filter="formDemo">点击登录</button>
-          <a href="javascript:;" class="forget-password-btn">忘记密码？</a>
-        </div>
-      </div>
-    </form>
+  <div id="app">
+    <imooc-header></imooc-header>
+    <router-view></router-view>
+    <imooc-footer></imooc-footer>
   </div>
 </template>
-
 <script>
-import axios from "axios";
-
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 export default {
-  data() {
-    return {
-      svg: "",
-    };
-  },
-  created() {
-    this.getCaptcha();
-  },
-  methods: {
-    getCaptcha() {
-      axios.get("http://localhost:3000/getcaptcha").then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          this.svg = res.data.msg;
-        }
-      });
-    },
-  },
-};
-</script>
-
-<style lang="scss" scoped>
-.app {
-  background-color: #f2f2f2;
-}
-
-input {
-  width: 190px;
-}
-
-.forget-password-btn {
-  margin-left: 10px;
-
-  &:hover {
-    color: #009688;
+  name: 'app',
+  components: {
+    'imooc-header': Header,
+    'imooc-footer': Footer
   }
 }
+</script>
 
+<style lang="scss">
+@import "assets/layui/css/layui.css";
+@import "assets/css/global.css";
+@import "assets/layui/css/modules/layer/default/layer.css";
+
+// 公用样式
 .svg {
   position: relative;
-  top: -15px;
+  top: -4px;
 }
 </style>
