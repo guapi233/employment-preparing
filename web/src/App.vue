@@ -44,7 +44,7 @@
             class="layui-input"
           />
         </div>
-        <div class="layui-form-mid" v-html="svg"></div>
+        <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha"></div>
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
@@ -66,12 +66,17 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:3000/getcaptcha").then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        this.svg = res.data.msg;
-      }
-    });
+    this.getCaptcha();
+  },
+  methods: {
+    getCaptcha() {
+      axios.get("http://localhost:3000/getcaptcha").then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          this.svg = res.data.msg;
+        }
+      });
+    },
   },
 };
 </script>
@@ -91,5 +96,10 @@ input {
   &:hover {
     color: #009688;
   }
+}
+
+.svg {
+  position: relative;
+  top: -15px;
 }
 </style>
