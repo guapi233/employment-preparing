@@ -6,14 +6,14 @@
         <div class="layui-input-block">
           <input
             type="text"
-            name="title"
-            required
-            lay-verify="required"
+            name="user"
             placeholder="请输入您的账号"
+            v-validate="'required|email'"
             autocomplete="off"
             class="layui-input"
           />
         </div>
+        <div class="error layui-form-mid">{{ errors.first("user") }}</div>
       </div>
 
       <div class="layui-form-item">
@@ -22,8 +22,6 @@
           <input
             type="password"
             name="password"
-            required
-            lay-verify="required"
             placeholder="请输入您的密码"
             autocomplete="off"
             class="layui-input"
@@ -37,8 +35,6 @@
           <input
             type="text"
             name="title"
-            required
-            lay-verify="required"
             placeholder="请输入验证码"
             autocomplete="off"
             class="layui-input"
