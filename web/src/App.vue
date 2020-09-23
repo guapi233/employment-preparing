@@ -33,7 +33,7 @@
 
       <div class="layui-form-item">
         <label class="layui-form-label">验证码</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
           <input
             type="text"
             name="title"
@@ -44,6 +44,7 @@
             class="layui-input"
           />
         </div>
+        <div class="layui-form-mid" v-html="svg"></div>
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
@@ -56,7 +57,23 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      svg: "",
+    };
+  },
+  created() {
+    axios.get("http://localhost:3000/getcaptcha").then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        this.svg = res.data.msg;
+      }
+    });
+  },
+};
 </script>
 
 <style lang="scss" scoped>
