@@ -25,7 +25,9 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "moment": "^2.29.0",
+    "mongoose": "^5.10.7",
     "nodemailer": "^6.4.11",
+    "saslprep": "^1.0.3",
     "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
