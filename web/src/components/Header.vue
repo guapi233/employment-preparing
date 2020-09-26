@@ -24,16 +24,16 @@
 
       <ul class="layui-nav fly-nav-user">
         <!-- 未登入的状态 -->
-        <!-- <li class="layui-nav-item">
+        <li class="layui-nav-item">
           <a class="iconfont icon-touxiang layui-hide-xs" href="../user/login.html"></a>
-        </li>-->
-        <!-- <li class="layui-nav-item">
+        </li>
+        <li class="layui-nav-item">
           <a href="../user/login.html">登入</a>
         </li>
         <li class="layui-nav-item">
           <a href="../user/reg.html">注册</a>
-        </li>-->
-        <!-- <li class="layui-nav-item layui-hide-xs">
+        </li>
+        <li class="layui-nav-item layui-hide-xs">
           <a
             href
             onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
@@ -48,7 +48,7 @@
             title="微博登入"
             class="iconfont icon-weibo"
           ></a>
-        </li>-->
+        </li>
 
         <!-- 登入后的状态 -->
         <!--
@@ -75,8 +75,8 @@
 
 <script>
 export default {
-  name: "Header",
-};
+  name: 'Header'
+}
 </script>
 
 <style lang="scss" scoped>
