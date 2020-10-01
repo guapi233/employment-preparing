@@ -55,7 +55,7 @@
 
         <!-- 登入后的状态 -->
         <template v-else>
-          <li class="layui-nav-item">
+          <li class="layui-nav-item" @mouseenter="show" @mouseleave="hide">
             <a class="fly-nav-avatar" href="javascript:;">
               <cite class="layui-hide-xs">{{ userInfo.name }}</cite>
               <i
@@ -69,7 +69,10 @@
               >
               <img :src="userInfo.pic" />
             </a>
-            <dl class="layui-nav-child">
+            <dl
+              class="layui-nav-child layui-anim layui-anim-upbit"
+              :class="{ 'layui-show': isHover }"
+            >
               <dd>
                 <a href="user/set.html"
                   ><i class="layui-icon">&#xe620;</i>基本设置</a
@@ -105,6 +108,12 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      isHover: false,
+      hoverCtrl: {},
+    };
+  },
   computed: {
     isShow() {
       return this.$store.state.isLogin;
@@ -118,6 +127,22 @@ export default {
           isVip: 0,
         }
       );
+    },
+  },
+  methods: {
+    // 展示信息操作
+    show() {
+      clearTimeout(this.hoverCtrl);
+      this.hoverCtrl = setTimeout(() => {
+        this.isHover = true;
+      }, 200);
+    },
+    // 隐藏操作信息
+    hide() {
+      clearTimeout(this.hoverCtrl);
+      this.hoverCtrl = setTimeout(() => {
+        this.isHover = false;
+      }, 500);
     },
   },
 };
