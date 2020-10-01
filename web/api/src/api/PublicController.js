@@ -21,6 +21,92 @@ class PublicController {
       data: newCaptca.data
     };
   }
+
+  getList(ctx) {
+    ctx.body = {
+      code: 200,
+      data: [
+        {
+          uid: {
+            name: "imooc",
+            isVip: 1
+          },
+          title: "詹博A",
+          content: "",
+          created: "2019-10-01 01:00:00",
+          catalog: "ask",
+          fav: 40,
+          isEnd: 0,
+          reads: 10,
+          answer: 0,
+          status: 0,
+          isTop: 1,
+          tags: [
+            {
+              name: "精华",
+              class: "layui-bg-red"
+            },
+            {
+              name: "热门",
+              class: "layui-bg-blue"
+            }
+          ]
+        },
+        {
+          uid: {
+            name: "imooc",
+            isVip: 1
+          },
+          title: "吃口饭！",
+          content: "",
+          created: "2019-10-01 01:00:00",
+          catalog: "ask",
+          fav: 40,
+          isEnd: 0,
+          reads: 10,
+          answer: 598,
+          status: 0,
+          isTop: 0,
+          tags: [
+            {
+              name: "精华",
+              class: "layui-bg-red"
+            },
+            {
+              name: "热门",
+              class: "layui-bg-blue"
+            }
+          ]
+        },
+        {
+          uid: {
+            name: "imooc",
+            isVip: 1
+          },
+          title: "芜湖！起飞！",
+          content: "",
+          created: "2019-10-01 01:00:00",
+          catalog: "ask",
+          fav: 70,
+          isEnd: 0,
+          reads: 10,
+          answer: 88,
+          status: 0,
+          isTop: 0,
+          tags: [
+            {
+              name: "精华",
+              class: "layui-bg-red"
+            },
+            {
+              name: "热门",
+              class: "layui-bg-blue"
+            }
+          ]
+        }
+      ]
+    };
+  }
 }
 
 export default new PublicController();
