@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "watch": "cross-env NODE_ENV=dev webpack --watch --progress --hide-modules --config config/webpack.config.dev.js",
     "debug": "nodemon --inspect ./dist/server.bundle.js",
-    "dev": "npm-run-all -p watch debug"
+    "dev": "npm-run-all -p watch"
   },
   "keywords": [],
   "author": "brian@toimc.com",

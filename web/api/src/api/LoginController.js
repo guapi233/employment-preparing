@@ -1,16 +1,15 @@
-import send from "@/config/MailConfig";
+import send from "../config/MailConfig";
 import bcrypt from "bcrypt";
 import moment from "moment";
 import jsonwebtoken from "jsonwebtoken";
-import config from "@/config";
-import { checkCode } from "@/common/Utils";
-import User from "@/model/User";
+import config from "../config";
+import { checkCode } from "../common/Utils";
+import User from "../model/User";
 
 class LoginController {
   constructor() {}
   async forget(ctx) {
     const { body } = ctx.request;
-    console.log(body);
     try {
       // body.username -> database -> email
       let result = await send({
@@ -46,16 +45,21 @@ class LoginController {
       if (await bcrypt.compare(body.password, user.password)) {
         checkUserPasswd = true;
       }
-
       // mongoDB查库
       if (checkUserPasswd) {
         // 验证通过，返回Token数据
-        console.log("Hello login");
+        const userobj = user.toJSON();
+        const filterArr = ["password", "username", "roles"];
+        filterArr.map(item => {
+          delete userobj[item];
+        });
+
         let token = jsonwebtoken.sign({ _id: "brian" }, config.JWT_SECRET, {
           expiresIn: "1d"
         });
         ctx.body = {
           code: 200,
+          data: userobj,
           token: token
         };
       } else {

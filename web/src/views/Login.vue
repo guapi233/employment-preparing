@@ -188,13 +188,18 @@ export default {
       })
         .then((res) => {
           if (res.code === 200) {
+            // 存入 vuex
+            this.$store.commit("setUserInfo", res.data);
+            this.$store.commit("setIsLogin", true);
+
             this.username = "";
             this.password = "";
             this.code = "";
             requestAnimationFrame(() => {
               this.$refs.observer.reset();
             });
-            console.log(res);
+
+            this.$router.push({ name: "index" });
           } else if (res.code === 401) {
             this.$refs.codefield.setErrors([res.msg]);
           }
