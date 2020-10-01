@@ -7,9 +7,11 @@
         v-for="item in lists"
         :key="item.name"
       >
-        <a href="">{{ item.name }}</a>
+        <router-link :to="{ name: item.link }">{{ item.name }}</router-link>
       </li>
     </ul>
+    <!-- 右侧内容 -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -21,18 +23,27 @@ export default {
       lists: [
         {
           name: "我的主页",
+          link: "home",
+        },
+        {
+          name: "用户中心",
+          link: "center",
         },
         {
           name: "基本设置",
+          link: "set",
         },
         {
           name: "我的帖子",
+          link: "posts",
         },
         {
           name: "我的消息",
+          link: "msg",
         },
         {
           name: "其他设置",
+          link: "others",
         },
       ],
     };
