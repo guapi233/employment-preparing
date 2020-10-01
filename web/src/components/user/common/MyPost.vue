@@ -75,7 +75,7 @@
         </tbody>
       </table>
     </div>
-    <imooc-page
+    <!-- <imooc-page
       v-show="total > 1"
       :total="total"
       :current="current"
@@ -83,7 +83,7 @@
       :hasTotal="true"
       :hasSelect="true"
       @changeCurrent="handleChange"
-    ></imooc-page>
+    ></imooc-page> -->
   </div>
 </template>
 
@@ -93,7 +93,7 @@
 export default {
   name: "my-post",
   components: {
-    "imooc-page": Pagination,
+    // "imooc-page": Pagination,
   },
   data() {
     return {

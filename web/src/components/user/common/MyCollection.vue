@@ -29,7 +29,7 @@
         </tr>
       </tbody>
     </table>
-    <imooc-page
+    <!-- <imooc-page
       v-show="total > 0"
       :total="total"
       :current="current"
@@ -37,7 +37,7 @@
       :hasTotal="true"
       :hasSelect="true"
       @changeCurrent="handleChange"
-    ></imooc-page>
+    ></imooc-page> -->
   </div>
 </template>
 
@@ -47,7 +47,7 @@
 export default {
   name: "my-collection",
   components: {
-    "imooc-page": Pagination,
+    // "imooc-page": Pagination,
   },
   data() {
     return {

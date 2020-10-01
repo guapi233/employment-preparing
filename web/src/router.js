@@ -140,7 +140,19 @@ export default new Router({
         {
           path: "posts",
           name: "posts",
-          component: Posts
+          component: Posts,
+          children: [
+            {
+              path: "",
+              name: "mypost",
+              component: MyPost
+            },
+            {
+              path: "mycollection",
+              name: "mycollection",
+              component: MyCollection
+            }
+          ]
         },
         {
           path: "others",
