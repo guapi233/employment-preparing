@@ -11,19 +11,40 @@ const Index = () =>
 const Template1 = () =>
   import(/* webpackChunkName: 'template1' */ "./views/channels/Template1.vue");
 const Center = () =>
-  import(/* webpackChunkName: 'center' */ "./views/Center.vue");
+  import(/* webpackChunkName: 'center' */ "@/views/Center.vue");
 const UserCenter = () =>
-  import(/* webpackChunkName: 'userCenter' */ "./components/user/Center.vue");
+  import(/* webpackChunkName: 'user-center' */ "@/components/user/Center.vue");
 const Settings = () =>
-  import(/* webpackChunkName: 'settings' */ "./components/user/Settings.vue");
-const Msg = () =>
-  import(/* webpackChunkName: 'user-msg' */ "./components/user/Msg.vue");
+  import(/* webpackChunkName: 'settings' */ "@/components/user/Settings.vue");
 const Posts = () =>
-  import(/* webpackChunkName: 'user-posts' */ "./components/user/Posts.vue");
+  import(/* webpackChunkName: 'user-post' */ "@/components/user/Posts.vue");
+const Msg = () =>
+  import(/* webpackChunkName: 'user-msg' */ "@/components/user/Msg.vue");
 const Others = () =>
-  import(/* webpackChunkName: 'user-others' */ "./components/user/Posts.vue");
-const User = () =>
-  import(/* webpackChunkName: 'user-others' */ "./views/User.vue");
+  import(/* webpackChunkName: 'othres' */ "@/components/user/Others.vue");
+const MyInfo = () =>
+  import(/* webpackChunkName: 'info' */ "@/components/user/common/MyInfo.vue");
+const PicUpload = () =>
+  import(
+    /* webpackChunkName: 'uploadpic' */ "@/components/user/common/PicUpload.vue"
+  );
+const Passwd = () =>
+  import(
+    /* webpackChunkName: 'password' */ "@/components/user/common/Passwd.vue"
+  );
+const Accounts = () =>
+  import(
+    /* webpackChunkName: 'accounts' */ "@/components/user/common/Accounts.vue"
+  );
+const MyPost = () =>
+  import(
+    /* webpackChunkName: 'mypost' */ "@/components/user/common/MyPost.vue"
+  );
+const MyCollection = () =>
+  import(
+    /* webpackChunkName: 'mycollection' */ "@/components/user/common/MyCollection.vue"
+  );
+const User = () => import(/* webpackChunkName: 'home' */ "@/views/User.vue");
 
 Vue.use(Router);
 
@@ -87,7 +108,29 @@ export default new Router({
         {
           path: "set",
           name: "set",
-          component: Settings
+          component: Settings,
+          children: [
+            {
+              path: "",
+              name: "info",
+              component: MyInfo
+            },
+            {
+              path: "pic",
+              name: "pic",
+              component: PicUpload
+            },
+            {
+              path: "passwd",
+              name: "passwd",
+              component: Passwd
+            },
+            {
+              path: "account",
+              name: "account",
+              component: Accounts
+            }
+          ]
         },
         {
           path: "msg",
