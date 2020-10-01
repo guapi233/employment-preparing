@@ -7,7 +7,11 @@
         v-for="item in lists"
         :key="item.name"
       >
-        <router-link :to="{ name: item.link }">{{ item.name }}</router-link>
+        <router-link
+          :to="{ name: item.link }"
+          :active-class="item.activeClass"
+          >{{ item.name }}</router-link
+        >
       </li>
     </ul>
     <!-- 右侧内容 -->
@@ -31,11 +35,13 @@ export default {
         },
         {
           name: "基本设置",
-          link: "set",
+          link: "info",
+          activeClass: "layui-this",
         },
         {
           name: "我的帖子",
           link: "posts",
+          activeClass: "layui-this",
         },
         {
           name: "我的消息",
