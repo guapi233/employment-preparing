@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/views/Home.vue";
+import jwt from "jsonwebtoken";
+import moment from "dayjs";
 import store from "@/store";
 
 const Login = () => import(/* webpackChunkName: 'login' */ "./views/Login.vue");
@@ -172,9 +174,15 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   if (token && userInfo.name) {
-    store.commit("setToken", token);
-    store.commit("setUserInfo", userInfo);
-    store.commit("setIsLogin", true);
+    const payload = jwt.decode(token);
+
+    if (moment().isBefore(moment(payload.exp * 1000))) {
+      store.commit("setToken", token);
+      store.commit("setUserInfo", userInfo);
+      store.commit("setIsLogin", true);
+    } else {
+      localStorage.clear();
+    }
   }
 
   // 判断目标路由是否需要鉴权
