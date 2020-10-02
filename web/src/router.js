@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/views/Home.vue";
+import store from "@/store";
 
 const Login = () => import(/* webpackChunkName: 'login' */ "./views/Login.vue");
 const Reg = () => import(/* webpackChunkName: 'reg' */ "./views/Reg.vue");
@@ -99,6 +100,21 @@ export default new Router({
       path: "/center",
       linkActiveClass: "layui-this",
       component: Center,
+      beforeEnter(from, to, next) {
+        const token = localStorage.getItem("token");
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+        if (store.state.isLogin) {
+          next();
+        } else if (token) {
+          store.commit("setToken", token);
+          store.commit("setUserInfo", userInfo);
+          store.commit("setIsLogin", true);
+          next();
+        } else {
+          next("/login");
+        }
+      },
       children: [
         {
           path: "",
