@@ -28,7 +28,7 @@ export default new Vuex.Store({
       if (value === "") return;
 
       state.token = value;
-      localStorage.setItem("token", JSON.stringify(value));
+      localStorage.setItem("token", value);
     }
   },
   actions: {}
