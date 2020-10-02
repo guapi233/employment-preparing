@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+import config from "../config/index";
 import { getValue } from "../config/RedisConfig";
 
 const checkCode = async (key, value) => {
@@ -13,4 +15,8 @@ const checkCode = async (key, value) => {
   }
 };
 
-export { checkCode };
+const getJWTPayload = token => {
+  return jwt.verify(token.split(" ")[1], config.JWT_SECRET);
+};
+
+export { checkCode, getJWTPayload };

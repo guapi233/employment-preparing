@@ -17,6 +17,7 @@ class UserController {
   async userSign(ctx) {
     // 取用户的ID
     const obj = await getJWTPayload(ctx.header.authorization);
+    console.log(obj);
     // 查询用户上一次签到记录
     const record = await SignRecord.findByUid(obj._id);
     const user = await User.findByID(obj._id);

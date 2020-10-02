@@ -1,5 +1,5 @@
 import Router from "koa-router";
-import userController from "../../api/UserController";
+import userController from "../api/UserController";
 // import contentController from "@/api/ContentController";
 // import errorController from "@/api/ErrorController";
 

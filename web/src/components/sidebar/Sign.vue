@@ -59,7 +59,7 @@
 <script>
 import SignInfo from "./SignInfo";
 import SignList from "./SignList";
-// import { userSign } from "@/api/user";
+import { userSign } from "@/api/user";
 import moment from "dayjs";
 export default {
   name: "sign",
@@ -80,21 +80,21 @@ export default {
   mounted() {
     // 判断用户的上一次签到时间与签到状态
     // 如果用户上一次签到时间与当天的签到日期相差1天，允许用户进行签到
-    // const isSign = this.$store.state.userInfo.isSign
-    // const lastSign = this.$store.state.userInfo.lastSign
-    // const nowDate = moment().format('YYYY-MM-DD')
-    // const lastDate = moment(lastSign).format('YYYY-MM-DD')
-    // const diff = moment(nowDate).diff(moment(lastDate), 'day')
-    // if (diff > 0 && isSign) {
-    //   this.isSign = false
-    // } else {
-    //   this.isSign = isSign
-    //   if (diff === 0 && isSign) {
-    //     this.nextSign()
-    //   } else {
-    //     this.msg = '今日已签到'
-    //   }
-    // }
+    const isSign = this.$store.state.userInfo.isSign;
+    const lastSign = this.$store.state.userInfo.lastSign;
+    const nowDate = moment().format("YYYY-MM-DD");
+    const lastDate = moment(lastSign).format("YYYY-MM-DD");
+    const diff = moment(nowDate).diff(moment(lastDate), "day");
+    if (diff > 0 && isSign) {
+      this.isSign = false;
+    } else {
+      this.isSign = isSign;
+      if (diff === 0 && isSign) {
+        this.nextSign();
+      } else {
+        this.msg = "今日已签到";
+      }
+    }
   },
   watch: {
     userInfo(newval, oldval) {

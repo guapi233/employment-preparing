@@ -54,7 +54,7 @@ class LoginController {
           delete userobj[item];
         });
 
-        let token = jsonwebtoken.sign({ _id: "brian" }, config.JWT_SECRET, {
+        let token = jsonwebtoken.sign({ _id: userobj._id }, config.JWT_SECRET, {
           expiresIn: "1d"
         });
         ctx.body = {
