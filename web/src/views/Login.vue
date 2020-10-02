@@ -200,7 +200,9 @@ export default {
               this.$refs.observer.reset();
             });
 
-            this.$router.push({ name: "index" });
+            setTimeout(() => {
+              this.$router.push({ name: "index" });
+            }, 1000);
           } else if (res.code === 401) {
             this.$refs.codefield.setErrors([res.msg]);
           }

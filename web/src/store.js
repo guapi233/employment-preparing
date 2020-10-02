@@ -16,6 +16,8 @@ export default new Vuex.Store({
     },
     // 设置用户的基本信息
     setUserInfo(state, value) {
+      if (value === "") return;
+
       state.userInfo = value;
       localStorage.setItem("userInfo", JSON.stringify(value));
     },
@@ -23,6 +25,8 @@ export default new Vuex.Store({
       state.isLogin = value;
     },
     setToken(state, value) {
+      if (value === "") return;
+
       state.token = value;
       localStorage.setItem("token", JSON.stringify(value));
     }

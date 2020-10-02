@@ -49,7 +49,7 @@ const User = () => import(/* webpackChunkName: 'home' */ "@/views/User.vue");
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   linkExactActiveClass: "layui-this",
   routes: [
     {
@@ -100,20 +100,8 @@ export default new Router({
       path: "/center",
       linkActiveClass: "layui-this",
       component: Center,
-      beforeEnter(from, to, next) {
-        const token = localStorage.getItem("token");
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-        if (store.state.isLogin) {
-          next();
-        } else if (token) {
-          store.commit("setToken", token);
-          store.commit("setUserInfo", userInfo);
-          store.commit("setIsLogin", true);
-          next();
-        } else {
-          next("/login");
-        }
+      meta: {
+        requirsAuth: true
       },
       children: [
         {
@@ -179,3 +167,27 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  if (token && userInfo.name) {
+    store.commit("setToken", token);
+    store.commit("setUserInfo", userInfo);
+    store.commit("setIsLogin", true);
+  }
+
+  // 判断目标路由是否需要鉴权
+  if (to.matched.some(record => record.meta.requirsAuth)) {
+    if (store.state.isLogin) {
+      next();
+    } else {
+      next("/login");
+    }
+  } else {
+    // 公共页面，不需要用户登录
+    next();
+  }
+});
+
+export default router;

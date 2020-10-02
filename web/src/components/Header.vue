@@ -74,28 +74,34 @@
               :class="{ 'layui-show': isHover }"
             >
               <dd>
-                <a href="user/set.html"
-                  ><i class="layui-icon">&#xe620;</i>基本设置</a
+                <router-link :to="{ name: 'info' }"
+                  ><i class="layui-icon">&#xe620;</i>基本设置</router-link
                 >
               </dd>
               <dd>
-                <a href="user/message.html"
+                <router-link :to="{ name: 'msg' }"
                   ><i class="iconfont icon-tongzhi" style="top: 4px"></i
-                  >我的消息</a
+                  >我的消息</router-link
                 >
               </dd>
               <dd>
-                <a href="user/home.html"
+                <router-link
+                  :to="{ name: 'home', params: { uid: userInfo._id } }"
                   ><i
                     class="layui-icon"
                     style="margin-left: 2px; font-size: 22px"
                     >&#xe68e;</i
-                  >我的主页</a
+                  >我的主页</router-link
                 >
               </dd>
               <hr style="margin: 5px 0" />
               <dd>
-                <a href="/user/logout/" style="text-align: center">退出</a>
+                <a
+                  href="javascript:;"
+                  @click="logout"
+                  style="text-align: center"
+                  >退出</a
+                >
               </dd>
             </dl>
           </li>
@@ -136,6 +142,20 @@ export default {
       this.hoverCtrl = setTimeout(() => {
         this.isHover = true;
       }, 200);
+    },
+    // 登出
+    logout() {
+      this.$confirm(
+        "确定退出吗？",
+        () => {
+          localStorage.clear();
+          this.$store.commit("setToken", "");
+          this.$store.commit("setUserInfo", {});
+          this.$store.commit("setIsLogin", false);
+          this.$router.push({ name: "index" }, () => {});
+        },
+        () => {}
+      );
     },
     // 隐藏操作信息
     hide() {
