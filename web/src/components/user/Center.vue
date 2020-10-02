@@ -19,29 +19,17 @@
           <div class="title">快捷方式</div>
           <ul class="content">
             <div class="layui-row layui-col-space10">
-              <li class="layui-col-sm3 layui-col-xs4">
-                <a href="">
+              <li
+                class="layui-col-sm3 layui-col-xs4"
+                v-for="(item, index) in lists"
+                :key="`user-center` + index"
+              >
+                <router-link :to="{ name: item.route }">
                   <div class="shortcut">😂</div>
-                  <span>修改密码</span>
-                </a>
-              </li>
-              <li class="layui-col-sm3 layui-col-xs4">
-                <a href="">
-                  <div class="shortcut">😂</div>
-                  <span>修改密码</span>
-                </a>
-              </li>
-              <li class="layui-col-sm3 layui-col-xs4">
-                <a href="">
-                  <div class="shortcut">😂</div>
-                  <span>修改密码</span>
-                </a>
-              </li>
-              <li class="layui-col-sm3 layui-col-xs4">
-                <a href="">
-                  <div class="shortcut">😂</div>
-                  <span>修改密码</span>
-                </a>
+                  <span>
+                    {{ item.name }}
+                  </span>
+                </router-link>
               </li>
             </div>
           </ul>
@@ -56,6 +44,60 @@ import Sign from "@/components/sidebar/Sign.vue";
 export default {
   name: "user-center",
   components: { Sign },
+  data() {
+    return {
+      lists: [
+        {
+          name: "修改信息",
+          route: "info",
+        },
+        {
+          name: "修改头像",
+          route: "pic",
+        },
+        {
+          name: "修改密码",
+          route: "passwd",
+        },
+        {
+          name: "账号绑定",
+          route: "account",
+        },
+        {
+          name: "发表新贴",
+          route: "",
+        },
+        {
+          name: "查看分享",
+          route: "",
+        },
+        {
+          name: "我的帖子",
+          route: "mypost",
+        },
+        {
+          name: "我的收藏",
+          route: "mycollection",
+        },
+        {
+          name: "其他资料",
+          route: "",
+        },
+        {
+          name: "关注公众号",
+          route: "",
+        },
+        {
+          name: "文档",
+          route: "",
+        },
+        {
+          name: "后台管理",
+          route: "",
+        },
+      ],
+    };
+  },
 };
 </script>
 
