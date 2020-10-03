@@ -48,7 +48,7 @@
       </div>
       <div class="layui-form-item gender-item">
         <label for="L_city" class="layui-form-label">性别</label>
-        <div class="layui-input-inline gray mt1 ml1 gender-radios">
+        <div class="layui-input-inline gray gender-radios">
           <label for="gender1" class="mr1">
             <input
               id="gender1"
