@@ -94,7 +94,7 @@
 </template>
 
 <script>
-// import { updateUserInfo } from "@/api/user";
+import { updateUserInfo } from "@/api/user";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 export default {
   name: "myinfo",
@@ -112,18 +112,18 @@ export default {
     };
   },
   mounted() {
-    // let {
-    //   username,
-    //   name,
-    //   location,
-    //   gender,
-    //   regmark,
-    // } = this.$store.state.userInfo;
-    // this.username = username || "";
-    // this.name = name || "";
-    // this.location = location || "";
-    // this.gender = gender || "";
-    // this.regmark = regmark || "";
+    let {
+      username,
+      name,
+      location,
+      gender,
+      regmark,
+    } = this.$store.state.userInfo;
+    this.username = username || "";
+    this.name = name || "";
+    this.location = location || "";
+    this.gender = gender || "";
+    this.regmark = regmark || "";
   },
   methods: {
     async submit() {
