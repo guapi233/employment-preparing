@@ -3,14 +3,14 @@ import { getJWTPayload } from "../common/Utils";
 import User from "../model/User";
 // import UserCollect from '../model/UserCollect'
 import moment from "dayjs";
-// import send from '@/config/MailConfig'
-// import uuid from 'uuid/v4'
-// import jwt from 'jsonwebtoken'
-// import config from '@/config'
+import send from "@/config/MailConfig";
+import uuid from "uuid/v4";
+import jwt from "jsonwebtoken";
+import config from "@/config";
 // import { setValue, getValue } from '@/config/RedisConfig'
 // import bcrypt from 'bcrypt'
 // import Comments from '@/model/Comments'
-// import qs from 'qs'
+import qs from "qs";
 // import CommentsHands from '@/model/CommentsHands'
 class UserController {
   // 用户签到接口
@@ -194,24 +194,24 @@ class UserController {
     }
   }
 
-  //   // 更新用户名
-  //   async updateUsername (ctx) {
-  //     const body = ctx.query
-  //     if (body.key) {
-  //       const token = await getValue(body.key)
-  //       const obj = getJWTPayload('Bearer ' + token)
-  //       await User.updateOne(
-  //         { _id: obj._id },
-  //         {
-  //           username: body.username
-  //         }
-  //       )
-  //       ctx.body = {
-  //         code: 200,
-  //         msg: '更新用户名成功'
-  //       }
-  //     }
-  //   }
+  // 更新用户名
+  async updateUsername(ctx) {
+    const body = ctx.query;
+    if (body.key) {
+      const token = await getValue(body.key);
+      const obj = getJWTPayload("Bearer " + token);
+      await User.updateOne(
+        { _id: obj._id },
+        {
+          username: body.username
+        }
+      );
+      ctx.body = {
+        code: 200,
+        msg: "更新用户名成功"
+      };
+    }
+  }
 
   //   // 修改密码接口
   //   async changePasswd (ctx) {
