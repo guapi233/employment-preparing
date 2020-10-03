@@ -50,6 +50,9 @@ const MyCollection = () =>
 const User = () => import(/* webpackChunkName: 'home' */ "@/views/User.vue");
 const NoFound = () =>
   import(/* webpackChunkName: 'notfound' */ "@/views/NotFound.vue");
+const Confirm = () =>
+  import(/* webpackChunkName: 'confirm' */ "@/views/Confirm.vue");
+const Reset = () => import(/* webpackChunkName: 'reset' */ "@/views/Reset.vue");
 
 Vue.use(Router);
 
@@ -76,6 +79,16 @@ const router = new Router({
       path: "/login",
       name: "login",
       component: Login
+    },
+    {
+      path: "/confirm",
+      name: "confirm",
+      component: Confirm
+    },
+    {
+      path: "/reset",
+      name: "reset",
+      component: Reset
     },
     {
       path: "/reg",

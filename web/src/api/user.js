@@ -7,8 +7,9 @@ const userSign = () => axios.get("/user/fav");
 // 更新用户基本资料
 const updateUserInfo = data => axios.post("/user/basic", data);
 
-// // 确认修改用户名
-// const updateUsername = (data) => axios.get('/public/resetEmail?' + qs.stringify(data))
+// 确认修改用户名
+const updateUsername = data =>
+  axios.get("/public/resetEmail?" + qs.stringify(data));
 
 // // 修改用户密码
 // const changePasswd = (data) => axios.post('/user/changePassword', {
@@ -44,8 +45,8 @@ const updateUserInfo = data => axios.post("/user/basic", data);
 
 export {
   userSign,
-  updateUserInfo
-  // updateUsername,
+  updateUserInfo,
+  updateUsername
   // changePasswd,
   // addCollect,
   // getCollect,
