@@ -1,6 +1,5 @@
 <template>
-  <div v-if="true">我的信息</div>
-  <div class="layui-form layui-form-pane layui-tab-item layui-show" v-else>
+  <div class="layui-form layui-form-pane layui-tab-item layui-show">
     <validation-observer ref="observer">
       <!-- v-slot="{ validate }" -->
       <div class="layui-form-item">
@@ -47,9 +46,9 @@
           <input type="text" v-model="location" class="layui-input" />
         </div>
       </div>
-      <div class="layui-form-item">
+      <div class="layui-form-item gender-item">
         <label for="L_city" class="layui-form-label">性别</label>
-        <div class="layui-input-inline gray mt1 ml1">
+        <div class="layui-input-inline gray mt1 ml1 gender-radios">
           <label for="gender1" class="mr1">
             <input
               id="gender1"
@@ -58,11 +57,8 @@
               v-model="gender"
               value="0"
               title="男"
+              style="display: inline-block"
             />
-            <i
-              class="layui-icon layui-icon-circle"
-              :class="{ 'layui-icon-radio': gender === '0' }"
-            ></i>
             男
           </label>
           <label for="gender2">
@@ -73,11 +69,8 @@
               v-model="gender"
               value="1"
               title="女"
+              style="display: inline-block"
             />
-            <i
-              class="layui-icon layui-icon-circle"
-              :class="{ 'layui-icon-radio': gender === '1' }"
-            ></i>
             女
           </label>
         </div>
@@ -102,12 +95,12 @@
 
 <script>
 // import { updateUserInfo } from "@/api/user";
-// import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 export default {
   name: "myinfo",
   components: {
-    // ValidationProvider,
-    // ValidationObserver,
+    ValidationProvider,
+    ValidationObserver,
   },
   data() {
     return {
@@ -166,7 +159,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layui-icon-radio {
-  color: #5fb878;
+.gender-item {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .gender-radios {
+    margin-left: 10px;
+  }
 }
 </style>
