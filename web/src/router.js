@@ -48,6 +48,8 @@ const MyCollection = () =>
     /* webpackChunkName: 'mycollection' */ "@/components/user/common/MyCollection.vue"
   );
 const User = () => import(/* webpackChunkName: 'home' */ "@/views/User.vue");
+const NoFound = () =>
+  import(/* webpackChunkName: 'notfound' */ "@/views/NotFound.vue");
 
 Vue.use(Router);
 
@@ -166,6 +168,15 @@ const router = new Router({
           component: Others
         }
       ]
+    },
+    {
+      path: "/404",
+      name: "404",
+      component: NoFound
+    },
+    {
+      path: "*",
+      redirect: "/404"
     }
   ]
 });
