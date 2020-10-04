@@ -14,5 +14,6 @@ const baseUrl =
 export default {
   DB_URL,
   REDIS,
-  JWT_SECRET
+  JWT_SECRET,
+  baseUrl
 };
