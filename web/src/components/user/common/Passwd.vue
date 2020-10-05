@@ -1,7 +1,6 @@
 <template>
   <!-- 修改密码 -->
-  <div v-if="true">修改密码</div>
-  <div class="layui-form layui-form-pane layui-tab-item layui-show" v-else>
+  <div class="layui-form layui-form-pane layui-tab-item layui-show">
     <form>
       <validation-observer ref="observer" v-slot="{ validate }">
         <div class="layui-form-item">
@@ -75,13 +74,13 @@
 </template>
 
 <script>
-// import { ValidationProvider, ValidationObserver } from "vee-validate";
-// import { changePasswd } from "@/api/user";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { changePasswd } from "@/api/user";
 export default {
   name: "password",
   components: {
-    // ValidationProvider,
-    // ValidationObserver,
+    ValidationProvider,
+    ValidationObserver,
   },
   data() {
     return {

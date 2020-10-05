@@ -25,7 +25,13 @@ const jwt = JWT({ secret: config.JWT_SECRET }).unless({
  * 使用koa-compose 集成中间件
  */
 const middleware = compose([
-  koaBody(),
+  koaBody({
+    multipart: true,
+    formidable: {
+      keepExtensions: true,
+      maxFieldsSize: 5 * 1024 * 1024
+    }
+  }),
   statics(path.join(__dirname, "../public")),
   cors(),
   jsonutil({ pretty: false, param: "pretty" }),

@@ -11,10 +11,11 @@ const updateUserInfo = data => axios.post("/user/basic", data);
 const updateUsername = data =>
   axios.get("/public/resetEmail?" + qs.stringify(data));
 
-// // 修改用户密码
-// const changePasswd = (data) => axios.post('/user/changePassword', {
-//   ...data
-// })
+// 修改用户密码
+const changePasswd = data =>
+  axios.post("/user/changePassword", {
+    ...data
+  });
 
 // // 设置收藏 & 取消收藏
 // const addCollect = (data) => axios.get('/user/setCollect?' + qs.stringify(data))
@@ -46,8 +47,8 @@ const updateUsername = data =>
 export {
   userSign,
   updateUserInfo,
-  updateUsername
-  // changePasswd,
+  updateUsername,
+  changePasswd
   // addCollect,
   // getCollect,
   // getPostListByUid,

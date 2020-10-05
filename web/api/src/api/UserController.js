@@ -213,25 +213,25 @@ class UserController {
     }
   }
 
-  //   // 修改密码接口
-  //   async changePasswd (ctx) {
-  //     const { body } = ctx.request
-  //     const obj = await getJWTPayload(ctx.header.authorization)
-  //     const user = await User.findOne({ _id: obj._id })
-  //     if (await bcrypt.compare(body.oldpwd, user.password)) {
-  //       const newpasswd = await bcrypt.hash(body.newpwd, 5)
-  //       await User.updateOne({ _id: obj._id }, { $set: { password: newpasswd } })
-  //       ctx.body = {
-  //         code: 200,
-  //         msg: '更新密码成功'
-  //       }
-  //     } else {
-  //       ctx.body = {
-  //         code: 500,
-  //         msg: '更新密码错误，请检查！'
-  //       }
-  //     }
-  //   }
+  // 修改密码接口
+  async changePasswd(ctx) {
+    const { body } = ctx.request;
+    const obj = await getJWTPayload(ctx.header.authorization);
+    const user = await User.findOne({ _id: obj._id });
+    if (await bcrypt.compare(body.oldpwd, user.password)) {
+      const newpasswd = await bcrypt.hash(body.newpwd, 5);
+      await User.updateOne({ _id: obj._id }, { $set: { password: newpasswd } });
+      ctx.body = {
+        code: 200,
+        msg: "更新密码成功"
+      };
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: "更新密码错误，请检查！"
+      };
+    }
+  }
 
   //   // 设置收藏
   //   async setCollect (ctx) {

@@ -24,6 +24,7 @@
 <script>
 import { uploadImg } from "@/api/content";
 import { updateUserInfo } from "@/api/user";
+import config from "@/config";
 export default {
   name: "pic-upload",
   data() {
@@ -47,7 +48,12 @@ export default {
       // 上传图片的之后 -> uploadImg
       uploadImg(formData).then((res) => {
         if (res.code === 200) {
-          this.pic = res.data;
+          const baseUrl =
+            process.env.NODE_ENV === "production"
+              ? config.baseUrl.pro
+              : config.baseUrl.dev;
+
+          this.pic = baseUrl + res.data;
           // 更新用户基本资料 -> updateUserInfo
           updateUserInfo({ pic: this.pic }).then((res) => {
             if (res.code === 200) {

@@ -140,6 +140,7 @@
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { getCode, login } from "@/api/login";
 import uuid from "uuid/v4";
+import config from "@/config";
 export default {
   name: "login",
   components: {
@@ -188,6 +189,14 @@ export default {
       })
         .then((res) => {
           if (res.code === 200) {
+            // 为头像路径添加前缀
+            const baseUrl =
+              process.env.NODE_ENV === "production"
+                ? config.baseUrl.pro
+                : config.baseUrl.dev;
+
+            res.data.pic = baseUrl + res.data.pic;
+
             // 存入 vuex
             this.$store.commit("setUserInfo", res.data);
             this.$store.commit("setIsLogin", true);
