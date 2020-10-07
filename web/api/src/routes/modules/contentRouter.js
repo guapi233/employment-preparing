@@ -8,8 +8,8 @@ router.prefix("/content");
 // 上传图片
 router.post("/upload", contentController.uploadImg);
 
-// // 发表新贴
-// router.post("/add", contentController.addPost);
+// 发表新贴
+router.post("/add", contentController.addPost);
 
 // // 更新帖子
 // router.post("/update", contentController.updatePost);
