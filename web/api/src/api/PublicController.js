@@ -1,5 +1,7 @@
 import svgCaptcha from "svg-captcha";
 import { getValue, setValue } from "../config/RedisConfig";
+import qs from "qs";
+import Post from "@/model/Post";
 
 class PublicController {
   constructor() {}
@@ -22,89 +24,41 @@ class PublicController {
     };
   }
 
-  getList(ctx) {
+  async getList(ctx) {
+    // 获取文章列表
+    const body = qs.parse(ctx.query);
+
+    const sort = body.sort ? body.sort : "created";
+    const page = body.page ? parseInt(body.page) : 0;
+    const limit = body.limit ? parseInt(body.limit) : 20;
+    const options = {};
+
+    if (body.title) {
+      options.title = { $regex: body.title };
+    }
+    if (body.catalog && body.catalog.length > 0) {
+      options.catalog = { $in: body.catalog };
+    }
+    if (body.isTop) {
+      options.isTop = body.isTop;
+    }
+    if (body.isEnd) {
+      options.isEnd = body.isEnd;
+    }
+    if (body.status) {
+      options.status = body.status;
+    }
+    if (typeof body.tag !== "undefined" && body.tag !== "") {
+      options.tags = { $elemMatch: { name: body.tag } };
+    }
+    const result = await Post.getList(options, sort, page, limit);
+    const total = await Post.countList(options);
+
     ctx.body = {
       code: 200,
-      data: [
-        {
-          uid: {
-            name: "imooc",
-            isVip: 1
-          },
-          title: "詹博A",
-          content: "",
-          created: "2019-10-01 01:00:00",
-          catalog: "ask",
-          fav: 40,
-          isEnd: 0,
-          reads: 10,
-          answer: 0,
-          status: 0,
-          isTop: 1,
-          tags: [
-            {
-              name: "精华",
-              class: "layui-bg-red"
-            },
-            {
-              name: "热门",
-              class: "layui-bg-blue"
-            }
-          ]
-        },
-        {
-          uid: {
-            name: "imooc",
-            isVip: 1
-          },
-          title: "吃口饭！",
-          content: "",
-          created: "2019-10-01 01:00:00",
-          catalog: "ask",
-          fav: 40,
-          isEnd: 0,
-          reads: 10,
-          answer: 598,
-          status: 0,
-          isTop: 0,
-          tags: [
-            {
-              name: "精华",
-              class: "layui-bg-red"
-            },
-            {
-              name: "热门",
-              class: "layui-bg-blue"
-            }
-          ]
-        },
-        {
-          uid: {
-            name: "imooc",
-            isVip: 1
-          },
-          title: "芜湖！起飞！",
-          content: "",
-          created: "2019-10-01 01:00:00",
-          catalog: "ask",
-          fav: 70,
-          isEnd: 0,
-          reads: 10,
-          answer: 88,
-          status: 0,
-          isTop: 0,
-          tags: [
-            {
-              name: "精华",
-              class: "layui-bg-red"
-            },
-            {
-              name: "热门",
-              class: "layui-bg-blue"
-            }
-          ]
-        }
-      ]
+      data: result,
+      msg: "获取文章列表成功",
+      total: total
     };
   }
 }
