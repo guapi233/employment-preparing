@@ -5,9 +5,14 @@
         <router-link tag="li" to="/" class="layui-hide-xs">
           <a href="/">首页</a>
         </router-link>
-        <router-link v-for="(item,index) in lists" :key="'panel'+ index" tag="li" :to="item.path">
+        <router-link
+          v-for="(item, index) in lists"
+          :key="'panel' + index"
+          tag="li"
+          :to="item.path"
+        >
           <a href="jie/index.html">
-            {{item.name}}
+            {{ item.name }}
             <span class="layui-badge-dot" v-if="item.isNew"></span>
           </a>
         </router-link>
@@ -30,13 +35,17 @@
         <span class="fly-search">
           <i class="layui-icon"></i>
         </span>
-        <a href="jie/add.html" class="layui-btn">发表新帖</a>
+        <router-link :to="{ name: 'add' }" class="layui-btn"
+          >发表新帖</router-link
+        >
       </div>
       <div
         class="layui-hide-sm layui-show-xs-block"
-        style="margin-top: -10px; padding-bottom: 10px; text-align: center;"
+        style="margin-top: -10px; padding-bottom: 10px; text-align: center"
       >
-        <a href="jie/add.html" class="layui-btn">发表新帖</a>
+        <router-link :to="{ name: 'add' }" class="layui-btn"
+          >发表新帖</router-link
+        >
       </div>
     </div>
   </div>
@@ -44,45 +53,45 @@
 
 <script>
 export default {
-  name: 'panel',
-  data () {
+  name: "panel",
+  data() {
     return {
       lists: [
         {
-          name: '提问',
-          path: '/index/ask',
-          isNew: false
+          name: "提问",
+          path: "/index/ask",
+          isNew: false,
         },
         {
-          name: '分享',
-          path: '/index/share',
-          isNew: true
+          name: "分享",
+          path: "/index/share",
+          isNew: true,
         },
         {
-          name: '讨论',
-          path: '/index/discuss',
-          isNew: false
+          name: "讨论",
+          path: "/index/discuss",
+          isNew: false,
         },
         {
-          name: '建议',
-          path: '/index/advise',
-          isNew: false
+          name: "建议",
+          path: "/index/advise",
+          isNew: false,
         },
         {
-          name: '公告',
-          path: '/index/notice',
-          isNew: false
+          name: "公告",
+          path: "/index/notice",
+          isNew: false,
         },
         {
-          name: '动态',
-          path: '/index/logs',
-          isNew: false
-        }
+          name: "动态",
+          path: "/index/logs",
+          isNew: false,
+        },
       ],
-      isLogin: this.$store.state.isLogin
-    }
-  }
-}
+      isLogin: this.$store.state.isLogin,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
