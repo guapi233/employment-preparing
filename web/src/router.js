@@ -57,6 +57,8 @@ const Add = () =>
   import(/* webpackChunkName: 'add' */ "@/components/contents/Add.vue");
 const Edit = () =>
   import(/* webpackChunkName: 'edit' */ "@/components/contents/Edit.vue");
+const Detail = () =>
+  import(/* webpackChunkName: 'detail' */ "@/components/contents/Detail.vue");
 
 Vue.use(Router);
 
@@ -152,6 +154,16 @@ const router = new Router({
             next("/");
           }
         }
+      }
+    },
+    {
+      path: "/detail/:tid",
+      name: "detail",
+      props: true,
+      component: Detail,
+      meta: {
+        // 通过后台接口动态添加到路由 addRoutes
+        types: ["get", "add", "delete"]
       }
     },
     {
