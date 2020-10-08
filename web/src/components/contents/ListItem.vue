@@ -2,18 +2,27 @@
   <div>
     <ul class="fly-list">
       <li v-for="(item, index) in items" :key="'listitem' + index">
-        <a href="user/home.html" class="fly-avatar">
+        <router-link
+          class="fly-avatar"
+          :to="{ name: 'home', params: { uid: item.uid._id } }"
+          link
+        >
           <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+            :src="item.uid.pic ? item.uid.pic : '/img/header.jpg'"
             alt="贤心"
           />
-        </a>
+        </router-link>
         <h2>
           <a class="layui-badge">{{ item.catalog }}</a>
-          <a href="jie/detail.html">{{ item.title }}</a>
+          <router-link :to="{ name: 'detail', params: { tid: item._id } }">{{
+            item.title
+          }}</router-link>
         </h2>
         <div class="fly-list-info">
-          <a href="user/home.html" link>
+          <router-link
+            :to="{ name: 'home', params: { uid: item.uid._id } }"
+            link
+          >
             <cite>{{ item.uid.name }}</cite>
             <!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
             <i
@@ -21,7 +30,7 @@
               v-if="item.uid.isVip !== '0'"
               >{{ "VIP" + item.uid.isVip }}</i
             >
-          </a>
+          </router-link>
           <span>{{ item.created | moment }}</span>
 
           <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻">
@@ -30,7 +39,7 @@
           </span>
           <span
             class="layui-badge fly-badge-accept layui-hide-xs"
-            v-show="item.status !== 0"
+            v-show="item.status !== '0'"
             >已结</span
           >
           <span class="fly-list-nums">
@@ -38,7 +47,10 @@
             {{ item.answer }}
           </span>
         </div>
-        <div class="fly-list-badge" v-show="item.tags.length > 0">
+        <div
+          class="fly-list-badge"
+          v-show="item.tags.length > 0 && item.tags[0].name !== ''"
+        >
           <span
             class="layui-badge"
             v-for="(tag, index) in item.tags"
@@ -59,10 +71,13 @@
 </template>
 
 <script>
-import moment from "moment";
-import "moment/locale/zh-cn";
+// import moment from 'dayjs'
+// import relativeTime from 'dayjs/plugin/relativeTime'
+// import 'dayjs/locale/zh-cn'
 
-import _ from "lodash";
+// moment.extend(relativeTime)
+
+// import _ from 'lodash'
 export default {
   name: "listitem",
   props: {
@@ -81,7 +96,7 @@ export default {
   },
   computed: {
     items() {
-      _.map(this.lists, (item) => {
+      this.lists.map((item) => {
         switch (item.catalog) {
           case "ask":
             item.catalog = "提问";
@@ -111,17 +126,17 @@ export default {
       this.$emit("nextpage");
     },
   },
-  filters: {
-    moment(date) {
-      // 超过7天，显示日期
-      if (moment(date).isBefore(moment().subtract(7, "days"))) {
-        return moment(date).format("YYYY-MM-DD");
-      } else {
-        // 1小前，xx小时前，X天前
-        return moment(date).from(moment());
-      }
-    },
-  },
+  // filters: {
+  //   moment (date) {
+  //     // 超过7天，显示日期
+  //     if (moment(date).isBefore(moment().subtract(7, 'days'))) {
+  //       return moment(date).format('YYYY-MM-DD')
+  //     } else {
+  //       // 1小前，xx小时前，X天前
+  //       return moment(date).locale('zh-cn').from(moment())
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -129,10 +144,5 @@ export default {
 .nomore {
   font-size: 16px;
   padding: 30px 0;
-}
-
-.laypage-next {
-  cursor: pointer;
-  user-select: none;
 }
 </style>
