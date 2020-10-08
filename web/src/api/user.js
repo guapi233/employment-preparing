@@ -17,8 +17,8 @@ const changePasswd = data =>
     ...data
   });
 
-// // 设置收藏 & 取消收藏
-// const addCollect = (data) => axios.get('/user/setCollect?' + qs.stringify(data))
+// 设置收藏 & 取消收藏
+const addCollect = data => axios.get("/user/setCollect?" + qs.stringify(data));
 
 // // 获取收藏列表
 // const getCollect = (data) => axios.get('/user/collect?' + qs.stringify(data))
@@ -48,8 +48,8 @@ export {
   userSign,
   updateUserInfo,
   updateUsername,
-  changePasswd
-  // addCollect,
+  changePasswd,
+  addCollect
   // getCollect,
   // getPostListByUid,
   // deletePostByUid,
