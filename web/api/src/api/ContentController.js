@@ -10,7 +10,7 @@ import mkdir from "make-dir";
 import { checkCode, getJWTPayload } from "@/common/Utils";
 import User from "@/model/User";
 // import PostTags from "@/model/PostTags";
-// import UserCollect from "../model/UserCollect";
+import UserCollect from "../model/UserCollect";
 // import qs from "qs";
 
 class ContentController {
@@ -92,6 +92,63 @@ class ContentController {
         msg: "图片验证码验证失败"
       };
     }
+  }
+
+  // 获取文章详情
+  async getPostDetail(ctx) {
+    const params = ctx.query;
+    if (!params.tid) {
+      ctx.body = {
+        code: 500,
+        msg: "文章id为空"
+      };
+      return;
+    }
+    const post = await Post.findByTid(params.tid);
+    if (!post) {
+      ctx.body = {
+        code: 200,
+        data: {},
+        msg: "查询文章详情成功"
+      };
+      return;
+    }
+    let isFav = 0;
+    // 判断用户是否传递Authorization的数据，即是否登录
+    if (
+      typeof ctx.header.authorization !== "undefined" &&
+      ctx.header.authorization !== ""
+    ) {
+      const obj = await getJWTPayload(ctx.header.authorization);
+      const userCollect = await UserCollect.findOne({
+        uid: obj._id,
+        tid: params.tid
+      });
+      if (userCollect && userCollect.tid) {
+        isFav = 1;
+      }
+    }
+    const newPost = post.toJSON();
+    newPost.isFav = isFav;
+    // 更新文章阅读记数
+    const result = await Post.updateOne(
+      { _id: params.tid },
+      { $inc: { reads: 1 } }
+    );
+    if (post._id && result.ok === 1) {
+      ctx.body = {
+        code: 200,
+        data: newPost,
+        msg: "查询文章详情成功"
+      };
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: "获取文章详情失败"
+      };
+    }
+    // const post = await Post.findOne({ _id: params.tid })
+    // const result = rename(post.toJSON(), 'uid', 'user')
   }
 }
 
