@@ -1,66 +1,103 @@
-import svgCaptcha from "svg-captcha";
-import { getValue, setValue } from "../config/RedisConfig";
-import qs from "qs";
-import Post from "@/model/Post";
+import svgCaptcha from 'svg-captcha'
+import { setValue } from '@/config/RedisConfig'
+import moment from 'dayjs'
+import Post from '@/model/Post'
+import Comments from '../model/Comments'
+import User from '@/model/User'
+import SignRecord from '@/model/SignRecord'
 
 class PublicController {
-  constructor() {}
-  async getCaptcha(ctx) {
-    const body = ctx.request.query;
+  // 获取图片验证码
+  async getCaptcha (ctx) {
+    const body = ctx.query
     const newCaptca = svgCaptcha.create({
       size: 4,
-      ignoreChars: "0o1il",
+      ignoreChars: '0oO1ilLI',
       color: true,
       noise: Math.floor(Math.random() * 5),
       width: 150,
       height: 38
-    });
+    })
     // 保存图片验证码数据，设置超时时间，单位: s
     // 设置图片验证码超时10分钟
-    setValue(body.sid, newCaptca.text, 10 * 60);
+    setValue(body.sid, newCaptca.text, 10 * 60)
     ctx.body = {
       code: 200,
       data: newCaptca.data
-    };
+    }
   }
 
-  async getList(ctx) {
-    // 获取文章列表
-    const body = qs.parse(ctx.query);
+  async getHotPost (ctx) {
+    // page limit
+    // type index 0-3日内， 1-7日内， 2-30日内， 3-全部
+    const params = ctx.query
+    const page = params.page ? parseInt(params.page) : 0
+    const limit = params.limit ? parseInt(params.limit) : 10
+    const index = params.index ? params.index : '0'
+    let startTime = ''
+    let endTime = ''
+    if (index === '0') {
+      startTime = moment().subtract(2, 'day').format('YYYY-MM-DD 00:00:00')
+    } else if (index === '1') {
+      startTime = moment().subtract(6, 'day').format('YYYY-MM-DD 00:00:00')
+    } else if (index === '2') {
+      startTime = moment().subtract(29, 'day').format('YYYY-MM-DD 00:00:00')
+    }
+    endTime = moment().add(1, 'day').format('YYYY-MM-DD 00:00:00')
+    const result = await Post.getHotPost(page, limit, startTime, endTime)
+    const total = await Post.getHotPostCount(page, limit, startTime, endTime)
+    ctx.body = {
+      code: 200,
+      total,
+      data: result,
+      msg: '获取热门文章成功'
+    }
+  }
 
-    const sort = body.sort ? body.sort : "created";
-    const page = body.page ? parseInt(body.page) : 0;
-    const limit = body.limit ? parseInt(body.limit) : 20;
-    const options = {};
-
-    if (body.title) {
-      options.title = { $regex: body.title };
-    }
-    if (body.catalog && body.catalog.length > 0) {
-      options.catalog = { $in: body.catalog };
-    }
-    if (body.isTop) {
-      options.isTop = body.isTop;
-    }
-    if (body.isEnd) {
-      options.isEnd = body.isEnd;
-    }
-    if (body.status) {
-      options.status = body.status;
-    }
-    if (typeof body.tag !== "undefined" && body.tag !== "") {
-      options.tags = { $elemMatch: { name: body.tag } };
-    }
-    const result = await Post.getList(options, sort, page, limit);
-    const total = await Post.countList(options);
-
+  async getHotComments (ctx) {
+    // 0-热门评论，1-最新评论
+    const params = ctx.query
+    const page = params.page ? parseInt(params.page) : 0
+    const limit = params.limit ? parseInt(params.limit) : 10
+    const index = params.index ? params.index : '0'
+    const result = await Comments.getHotComments(page, limit, index)
+    const total = await Comments.getHotCommentsCount(index)
     ctx.body = {
       code: 200,
       data: result,
-      msg: "获取文章列表成功",
-      total: total
-    };
+      total,
+      msg: '获取热门评论成功'
+    }
+  }
+
+  async getHotSignRecord (ctx) {
+    // 0-总签到榜，1-最新签到
+    const params = ctx.query
+    const page = params.page ? parseInt(params.page) : 0
+    const limit = params.limit ? parseInt(params.limit) : 10
+    const index = params.index ? params.index : '0'
+    let result
+    let total = 0
+    if (index === '0') {
+      // 总签到榜
+      result = await User.getTotalSign(page, limit)
+      total = await User.getTotalSignCount()
+    } else if (index === '1') {
+      // 今日签到
+      result = await SignRecord.getTopSign(page, limit)
+      total = await SignRecord.getTopSignCount()
+    } else if (index === '2') {
+      // 最新签到
+      result = await SignRecord.getLatestSign(page, limit)
+      total = await SignRecord.getSignCount()
+    }
+    ctx.body = {
+      code: 200,
+      data: result,
+      total,
+      msg: '获取签到排行成功'
+    }
   }
 }
 
-export default new PublicController();
+export default new PublicController()

@@ -195,7 +195,9 @@ export default {
                 ? config.baseUrl.pro
                 : config.baseUrl.dev;
 
-            res.data.pic = baseUrl + res.data.pic;
+            if (!res.data.pic.includes("http")) {
+              res.data.pic = baseUrl + res.data.pic;
+            }
 
             // 存入 vuex
             this.$store.commit("setUserInfo", res.data);

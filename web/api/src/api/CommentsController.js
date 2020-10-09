@@ -109,13 +109,11 @@ class CommentsController {
     newComment.uid = post.uid;
     const comment = await newComment.save();
     const num = await Comments.getTotal(post.uid);
-    global.ws.send(
-      post.uid,
-      JSON.stringify({
-        event: "message",
-        message: num
-      })
-    );
+
+    // global.ws.send(post.uid, JSON.stringify({
+    //   event: 'message',
+    //   message: num
+    // }))
     // 评论记数
     const updatePostresult = await Post.updateOne(
       { _id: body.tid },

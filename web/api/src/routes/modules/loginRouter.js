@@ -1,12 +1,20 @@
-import Router from "koa-router";
-import loginController from "@/api/LoginController";
+import Router from 'koa-router'
+import loginController from '@/api/LoginController'
 
-const router = new Router();
+const router = new Router()
 
-router.prefix("/login");
+router.prefix('/login')
 
-router.post("/forget", loginController.forget);
-router.post("/login", loginController.login);
-router.post("/reg", loginController.reg);
+// 忘记密码
+router.post('/forget', loginController.forget)
 
-export default router;
+// 登录接口
+router.post('/login', loginController.login)
+
+// 注册用户
+router.post('/reg', loginController.reg)
+
+// 密码重置
+router.post('/reset', loginController.reset)
+
+export default router
