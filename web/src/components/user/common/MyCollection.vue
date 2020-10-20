@@ -1,7 +1,6 @@
 <template>
   <div>
-    我的收藏
-    <table class="layui-table" v-if="false">
+    <table class="layui-table">
       <thead>
         <tr>
           <th class="title">
@@ -29,7 +28,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- <imooc-page
+    <imooc-page
       v-show="total > 0"
       :total="total"
       :current="current"
@@ -37,17 +36,17 @@
       :hasTotal="true"
       :hasSelect="true"
       @changeCurrent="handleChange"
-    ></imooc-page> -->
+    ></imooc-page>
   </div>
 </template>
 
 <script>
-// import { getCollect } from "@/api/user";
-// import Pagination from "@/components/modules/pagination/Index";
+import { getCollect } from "@/api/user";
+import Pagination from "@/components/modules/pagination/Index";
 export default {
   name: "my-collection",
   components: {
-    // "imooc-page": Pagination,
+    "imooc-page": Pagination,
   },
   data() {
     return {
@@ -59,7 +58,7 @@ export default {
     };
   },
   mounted() {
-    // this.getCollectList();
+    this.getCollectList();
   },
   methods: {
     getCollectList() {

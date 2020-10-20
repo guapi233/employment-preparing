@@ -20,8 +20,8 @@ const changePasswd = data =>
 // 设置收藏 & 取消收藏
 const addCollect = data => axios.get("/user/setCollect?" + qs.stringify(data));
 
-// // 获取收藏列表
-// const getCollect = (data) => axios.get('/user/collect?' + qs.stringify(data))
+// 获取收藏列表
+const getCollect = data => axios.get("/user/collect?" + qs.stringify(data));
 
 // 获取发表的文章列表
 const getPostListByUid = data => axios.get("/user/post?" + qs.stringify(data));
@@ -51,7 +51,7 @@ export {
   updateUsername,
   changePasswd,
   addCollect,
-  // getCollect,
+  getCollect,
   getPostListByUid,
   deletePostByUid
   // getInfo,
