@@ -1,7 +1,6 @@
 <template>
   <div>
-    我的提交
-    <div class="overflow" v-if="false">
+    <div class="overflow">
       <table class="layui-table" border="0">
         <thead>
           <tr class="layui-table-header">
@@ -75,7 +74,7 @@
         </tbody>
       </table>
     </div>
-    <!-- <imooc-page
+    <imooc-page
       v-show="total > 1"
       :total="total"
       :current="current"
@@ -83,17 +82,17 @@
       :hasTotal="true"
       :hasSelect="true"
       @changeCurrent="handleChange"
-    ></imooc-page> -->
+    ></imooc-page>
   </div>
 </template>
 
 <script>
-// import { getPostListByUid, deletePostByUid } from "@/api/user";
-// import Pagination from "@/components/modules/pagination/Index";
+import { getPostListByUid, deletePostByUid } from "@/api/user";
+import Pagination from "@/components/modules/pagination/Index";
 export default {
   name: "my-post",
   components: {
-    // "imooc-page": Pagination,
+    "imooc-page": Pagination,
   },
   data() {
     return {
@@ -105,7 +104,7 @@ export default {
     };
   },
   mounted() {
-    // this.getPostList();
+    this.getPostList();
   },
   methods: {
     getPostList() {
@@ -116,6 +115,7 @@ export default {
         if (res.code === 200) {
           this.list = res.data;
           this.total = res.total;
+          console.log(this.list);
         }
       });
     },
