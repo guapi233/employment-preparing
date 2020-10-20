@@ -40,7 +40,7 @@ export default {
         },
         {
           name: "我的帖子",
-          link: "posts",
+          link: "mypost",
           activeClass: "layui-this",
         },
         {
